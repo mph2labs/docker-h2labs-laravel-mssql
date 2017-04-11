@@ -27,7 +27,7 @@ RUN cd /tmp/msodbcsql-11.0.2270.0 && yes YES | ./build_dm.sh --accept-warning --
 RUN apt-get remove -y aptitude wget unzip make gcc && apt-get -y autoremove && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update && \
-    apt-get -y install apache2 php5 php5-mssql && \
+    apt-get -y install apache2 php5 php5-mssql git curl php5-mcrypt php5-json && \
     apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -36,10 +36,19 @@ RUN /usr/sbin/a2enmod rewrite
 RUN php5enmod mssql
 
 # Edit apache2.conf to change apache site settings.
-ADD apache2.conf /etc/apache2/
+#ADD apache2.conf /etc/apache2/
 
 # Edit 000-default.conf to change apache site settings.
-ADD 000-default.conf /etc/apache2/sites-available/
+#ADD 000-default.conf /etc/apache2/sites-available/
+
+ADD 000-laravel.conf /etc/apache2/sites-available/
+ADD 001-laravel-ssl.conf /etc/apache2/sites-available/
+RUN /usr/sbin/a2dissite '*' && /usr/sbin/a2ensite 000-laravel 001-laravel-ssl
+
+RUN /usr/bin/curl -sS https://getcomposer.org/installer |/usr/bin/php
+RUN /bin/mv composer.phar /usr/local/bin/composer
+RUN /usr/local/bin/composer create-project laravel/laravel /var/www/laravel --prefer-dist
+RUN /bin/chown www-data:www-data -R /var/www/laravel/storage /var/www/laravel/bootstrap/cache
 
 # Uncomment these two lines to fix "non-UTF8" chars encoding and time format problems
 # ADD freetds.conf /etc/freetds/
