@@ -27,7 +27,7 @@ RUN cd /tmp/msodbcsql-11.0.2270.0 && yes YES | ./build_dm.sh --accept-warning --
 RUN apt-get remove -y aptitude wget unzip make gcc && apt-get -y autoremove && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update && \
-    apt-get -y install apache2 php5 php5-mssql git curl php5-mcrypt php5-json freetds-common freetds-bin unixodbc php5-sybase && \
+    apt-get -y install apache2 php5 php5-mssql git curl php5-mcrypt php5-json freetds-common freetds-bin unixodbc php5-sybase vim && \
     apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
