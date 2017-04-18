@@ -23,6 +23,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
 RUN curl https://packages.microsoft.com/config/ubuntu/15.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get -y install msodbcsql=13.1.4.0-1
+RUN apt-get -y install libc6 libstdc++6 libkrb5-3 libcurl3 openssl debconf unixodbc
 RUN apt-get -y install unixodbc-dev
 
 # Clean installation files
