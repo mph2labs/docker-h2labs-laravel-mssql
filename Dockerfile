@@ -13,7 +13,7 @@ RUN apt-get update && apt-get -y install aptitude wget unzip make gcc libkrb5-3 
 RUN apt-get remove -y aptitude wget unzip make gcc && apt-get -y autoremove && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update && \
-    apt-get -y install apache2 php5 php5-mssql git curl php5-mcrypt php5-json freetds-common freetds-bin vim && \
+    apt-get -y install apache2 php5 php5-mssql git curl php5-mcrypt php5-json php5-curl freetds-common freetds-bin vim && \
     apt-get -y autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
